@@ -1,0 +1,662 @@
+{
+  "info": {
+    "name": "Jotter Storage Management System",
+    "description": "Complete API collection for Jotter - Storage Management System\n\nDeveloped for SparkTech Agency Backend Developer Assessment\n\nBase URL: http://localhost:5000/api\n\nAuthentication: Session-based (cookies)\n\nDeveloper: [Your Name]\nSubmission Date: January 16, 2025",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/signup",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "signup"]
+            },
+            "description": "Register a new user account"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login to existing account. Returns session cookie."
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Get currently authenticated user details"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout and destroy session"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/forgot-password",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "forgot-password"]
+            },
+            "description": "Send password reset code to email"
+          }
+        },
+        {
+          "name": "Verify Reset Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/verify-code",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "verify-code"]
+            },
+            "description": "Verify 6-digit reset code"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"newPassword\": \"newpassword123\",\n  \"confirmPassword\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/reset-password",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "reset-password"]
+            },
+            "description": "Reset password with new password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Items",
+      "item": [
+        {
+          "name": "Get All Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items",
+              "host": ["{{base_url}}"],
+              "path": ["items"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "note",
+                  "disabled": true,
+                  "description": "Filter by type: note, image, pdf, folder"
+                },
+                {
+                  "key": "favorite",
+                  "value": "true",
+                  "disabled": true,
+                  "description": "Get only favorites"
+                },
+                {
+                  "key": "search",
+                  "value": "test",
+                  "disabled": true,
+                  "description": "Search by name"
+                },
+                {
+                  "key": "date",
+                  "value": "2025-01-16",
+                  "disabled": true,
+                  "description": "Filter by creation date (YYYY-MM-DD)"
+                }
+              ]
+            },
+            "description": "Get all items with optional filters"
+          }
+        },
+        {
+          "name": "Get Storage Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/stats",
+              "host": ["{{base_url}}"],
+              "path": ["items", "stats"]
+            },
+            "description": "Get storage statistics and usage breakdown"
+          }
+        },
+        {
+          "name": "Get Recent Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/recent",
+              "host": ["{{base_url}}"],
+              "path": ["items", "recent"]
+            },
+            "description": "Get recently created items"
+          }
+        },
+        {
+          "name": "Get Locked Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/locked",
+              "host": ["{{base_url}}"],
+              "path": ["items", "locked"]
+            },
+            "description": "Get items in private/locked folder"
+          }
+        },
+        {
+          "name": "Create Note",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"note\",\n  \"name\": \"My First Note\",\n  \"content\": \"This is the content of my note\",\n  \"isLocked\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/items",
+              "host": ["{{base_url}}"],
+              "path": ["items"]
+            },
+            "description": "Create a new note"
+          }
+        },
+        {
+          "name": "Create Folder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"folder\",\n  \"name\": \"My Documents\",\n  \"isLocked\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/items",
+              "host": ["{{base_url}}"],
+              "path": ["items"]
+            },
+            "description": "Create a new folder"
+          }
+        },
+        {
+          "name": "Upload Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "type",
+                  "value": "image",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "My Photo",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "isLocked",
+                  "value": "false",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/items",
+              "host": ["{{base_url}}"],
+              "path": ["items"]
+            },
+            "description": "Upload an image file"
+          }
+        },
+        {
+          "name": "Upload PDF",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "type",
+                  "value": "pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "Document",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "isLocked",
+                  "value": "false",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/items",
+              "host": ["{{base_url}}"],
+              "path": ["items"]
+            },
+            "description": "Upload a PDF file"
+          }
+        },
+        {
+          "name": "Get Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/:itemId",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Get specific item details by ID"
+          }
+        },
+        {
+          "name": "Update Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"content\": \"Updated content\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/items/:itemId",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Update item name or content"
+          }
+        },
+        {
+          "name": "Delete Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/:itemId",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Delete an item permanently"
+          }
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/:itemId/favorite",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId", "favorite"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Add or remove item from favorites"
+          }
+        },
+        {
+          "name": "Duplicate Item",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/:itemId/duplicate",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId", "duplicate"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Create a duplicate of an item"
+          }
+        },
+        {
+          "name": "Generate Share Link",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/items/:itemId/share",
+              "host": ["{{base_url}}"],
+              "path": ["items", ":itemId", "share"],
+              "variable": [
+                {
+                  "key": "itemId",
+                  "value": "replace_with_actual_id"
+                }
+              ]
+            },
+            "description": "Generate a shareable link for item"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Folders",
+      "item": [
+        {
+          "name": "Lock Folder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/folders/:folderId/lock",
+              "host": ["{{base_url}}"],
+              "path": ["folders", ":folderId", "lock"],
+              "variable": [
+                {
+                  "key": "folderId",
+                  "value": "replace_with_folder_id"
+                }
+              ]
+            },
+            "description": "Lock a folder with password (4-6 digits)"
+          }
+        },
+        {
+          "name": "Unlock Folder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/folders/:folderId/unlock",
+              "host": ["{{base_url}}"],
+              "path": ["folders", ":folderId", "unlock"],
+              "variable": [
+                {
+                  "key": "folderId",
+                  "value": "replace_with_folder_id"
+                }
+              ]
+            },
+            "description": "Unlock a locked folder with correct password"
+          }
+        },
+        {
+          "name": "Remove Lock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/folders/:folderId/remove-lock",
+              "host": ["{{base_url}}"],
+              "path": ["folders", ":folderId", "remove-lock"],
+              "variable": [
+                {
+                  "key": "folderId",
+                  "value": "replace_with_folder_id"
+                }
+              ]
+            },
+            "description": "Remove password lock from folder"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            },
+            "description": "Get current user profile information"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "username",
+                  "value": "John Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            },
+            "description": "Update username and/or avatar"
+          }
+        },
+        {
+          "name": "Set Lock Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lockPassword\": \"mySecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile/set-lock-password",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "set-lock-password"]
+            },
+            "description": "Set password for private folder access"
+          }
+        },
+        {
+          "name": "Verify Lock Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lockPassword\": \"mySecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile/verify-lock-password",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "verify-lock-password"]
+            },
+            "description": "Verify private folder password for access"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    }
+  ]
+}
